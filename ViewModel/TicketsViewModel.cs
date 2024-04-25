@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace PrioritySearchProgram.ViewModel
 {
-    class ProductsViewModel
+    class TicketsViewModel
     {
 
         private readonly ObservableCollection<ConcertTicket> _concertTickets = new ObservableCollection<ConcertTicket>();
@@ -33,7 +33,7 @@ namespace PrioritySearchProgram.ViewModel
 
         private SearchingService<ConcertTicket> SearchingServiceConcert { get; set; }
         private SearchingService<FootballGameTicket> SearchingServiceFootball { get; set; }
-        public ProductsViewModel()
+        public TicketsViewModel()
         {
             loadData();
             GlobalEvents.AddFieldsSearchHandler(FilterProducts);

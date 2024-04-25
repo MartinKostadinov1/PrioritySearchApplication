@@ -27,7 +27,7 @@ namespace PrioritySearchProgram.View.Control
         public ProductsView()
         {
             InitializeComponent(); 
-            this.DataContext = new ProductsViewModel();
+            this.DataContext = new TicketsViewModel();
         }
     }
 }
