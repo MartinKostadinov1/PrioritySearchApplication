@@ -51,6 +51,9 @@ namespace PrioritySearchProgram.ViewModel
 
                 concertTicketsRecords.ForEach(_concertTickets.Add);
                 footballTicketsRecords.ForEach(_footballTickets.Add);
+
+                _backupFootballTickets = _footballTickets.ToList();
+                _backupConcertTickets = _concertTickets.ToList();
             }
         }
 
@@ -58,11 +61,10 @@ namespace PrioritySearchProgram.ViewModel
         {
             FieldsSearchQueries fieldSearchQueries = e.OriginalSource as FieldsSearchQueries;
 
-            if (fieldSearchQueries.TicketType is FootballGameTicket) {
-                var footballTickets = SearchingServiceFootball.ExecuteSearch(fieldSearchQueries, _footballTickets.ToList());
-
+            if (fieldSearchQueries.TicketType is FootballGameTicket) 
+            {
+                var footballTickets = SearchingServiceFootball.ExecuteSearch(fieldSearchQueries, _backupFootballTickets.ToList());
                 showFootballTicketsClearButton = true;
-                _backupFootballTickets = _footballTickets.ToList();
 
                 _footballTickets.Clear();
                 footballTickets.ForEach(_footballTickets.Add);
@@ -70,7 +72,6 @@ namespace PrioritySearchProgram.ViewModel
             {
                 var concertTickets = SearchingServiceConcert.ExecuteSearch(fieldSearchQueries, _concertTickets.ToList());
                 showConcertTicketsClearButton = true;
-                _backupConcertTickets = _concertTickets.ToList();
 
                 _concertTickets.Clear();
                 concertTickets.ForEach(_concertTickets.Add);

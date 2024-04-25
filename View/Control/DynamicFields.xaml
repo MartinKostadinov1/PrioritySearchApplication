@@ -10,8 +10,9 @@
     <Grid>
         
         <StackPanel>
-            
-            <StackPanel Name="stackPanel" Width="400"></StackPanel>
+
+            <StackPanel Name="stackPanel" Width="600"></StackPanel>
+            <CheckBox Content="Default priorities" Click="UseDeaultPriorities"></CheckBox>
 
         </StackPanel>
 

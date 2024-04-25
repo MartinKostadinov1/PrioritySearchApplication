@@ -1,4 +1,5 @@
-﻿using PrioritySearchProgram.Events;
+﻿using Microsoft.VisualBasic;
+using PrioritySearchProgram.Events;
 using PrioritySearchProgram.Helper;
 using PrioritySearchProgram.Model;
 using System.Linq;
@@ -13,18 +14,21 @@ namespace PrioritySearchProgram.View.Control
         private List<int> priotityList = [];
         private List<ComboBox> dropdowns = [];
         Dictionary<int, int> selectedDropdownValues = [];
+        List<int> defaultPrios = [];
 
         //refactor
         Ticket displayedTicket;
 
         Action closeAction;
 
+        bool useDefaultPrios = false;
+
         public DynamicFields()
         {
             InitializeComponent();
         }
 
-        public void DisplayFields(object obj, Action close)
+        public void DisplayFields(object obj, List<int> defaultPrios, Action close)
         {
             if (obj == null)
                 return;
@@ -36,6 +40,8 @@ namespace PrioritySearchProgram.View.Control
 
             var properties = obj.GetType().GetProperties();
 
+            this.defaultPrios = defaultPrios;
+
             dropdowns.Clear();
             priotityList.Clear();
 
@@ -46,6 +52,10 @@ namespace PrioritySearchProgram.View.Control
 
                 var label = new Label();
                 label.Content = prop.Name;
+                if (prop.PropertyType == typeof(DateTime))
+                {
+                    label.Content += " (DD/mm/YYYY HH:MM:SS AM/PM)";
+                }
                 label.Margin = new Thickness(5);
 
                 FrameworkElement inputControl;
@@ -68,7 +78,7 @@ namespace PrioritySearchProgram.View.Control
                 stackPanelHorizontal.HorizontalAlignment = HorizontalAlignment.Right;
                 stackPanelHorizontal.Orientation = Orientation.Horizontal;
 
-                inputControl.Width = 200;
+                inputControl.MinWidth = 200;
                 stackPanelHorizontal.Children.Add(label);
                 stackPanelHorizontal.Children.Add(inputControl);
 
@@ -92,7 +102,11 @@ namespace PrioritySearchProgram.View.Control
             searchButton.Content = "Search";
             stackPanel.Children.Add(searchButton);
 
-            //            <Button Width="200" Height="50" Click="Search">Search</Button>
+        }
+
+        public void UseDeaultPriorities(object sender, RoutedEventArgs e)
+        {
+            useDefaultPrios = (sender as CheckBox).IsChecked ?? false;
         }
 
         public void Search(object sender, RoutedEventArgs e)
@@ -108,11 +122,11 @@ namespace PrioritySearchProgram.View.Control
                 if (control is TextBox)
                 {
 
-                    fieldsSearchQueries.Add(new FieldSearchQuery(fieldName, selectedDropdownValues.ContainsKey(i) ? selectedDropdownValues[i] : int.MaxValue, ((TextBox)control).Text));
+                    fieldsSearchQueries.Add(new FieldSearchQuery(fieldName, selectedDropdownValues.ContainsKey(i) ? selectedDropdownValues[i] : (useDefaultPrios ? defaultPrios[i] : int.MaxValue), ((TextBox)control).Text));
                 }
                 else if (control is CheckBox)
                 {
-                    fieldsSearchQueries.Add(new FieldSearchQuery(fieldName, selectedDropdownValues.ContainsKey(i) ? selectedDropdownValues[i] : int.MaxValue, ((CheckBox)control).IsChecked.ToString()));
+                    fieldsSearchQueries.Add(new FieldSearchQuery(fieldName, selectedDropdownValues.ContainsKey(i) ? selectedDropdownValues[i] : (useDefaultPrios ? defaultPrios[i] : int.MaxValue), ((CheckBox)control).IsChecked.ToString()));
                 }
 
                 i++;

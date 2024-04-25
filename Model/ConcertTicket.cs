@@ -9,6 +9,7 @@ namespace PrioritySearchProgram.Model
 {
     public class ConcertTicket : Ticket
     {
+        public static List<int> DefaultPriorities = [6,2,3,1,4,5,7,8];
         public DateTime DateTime { get; set; }
 
         public string Performer { get; set; }

@@ -19,6 +19,10 @@ namespace PrioritySearchProgram.Service
             var searchFieldsOrdered = fieldsSearchQueries.FieldsSearchingQueries.Where(t => t.Priority != int.MaxValue).OrderByDescending(f => f.Priority).ToList();
 
             var topPrio = searchFieldsOrdered.LastOrDefault();
+            if (topPrio == null)
+            {
+                return tickets;
+            }
             if (!tickets.Any(t=> t.ToSearchMap()[topPrio.FieldName].Contains(topPrio.SearchValue.ToLower()))) {
                 return [];
             }

@@ -10,6 +10,7 @@ namespace PrioritySearchProgram.Model
 {
     public class FootballGameTicket: Ticket
     {
+        public static List<int> DefaultPriorities = [6,3,4,5,1,2,7,8,9];
         public DateTime DateTime { get; set; }
 
         public string Host { get; set; }

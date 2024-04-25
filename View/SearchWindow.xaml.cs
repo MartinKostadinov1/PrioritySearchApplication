@@ -21,10 +21,10 @@ namespace PrioritySearchProgram.View
     /// </summary>
     public partial class SearchWindow : Window
     {
-        public SearchWindow(object searchType)
+        public SearchWindow(object searchType, List<int> defaultPrios)
         {
             InitializeComponent();
-            dynamicFieldsView.DisplayFields(searchType, Close);
+            dynamicFieldsView.DisplayFields(searchType, defaultPrios, Close);
         }
     }
 }

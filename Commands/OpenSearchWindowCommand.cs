@@ -28,11 +28,11 @@ namespace PrioritySearchProgram.Commands
             string? command = parameter as string;
 
             if (command.Equals("FootballGameTicketInstance")) { 
-                (new SearchWindow(new FootballGameTicket())).Show(); 
+                (new SearchWindow(new FootballGameTicket(), FootballGameTicket.DefaultPriorities)).Show(); 
             } 
             else
             {
-                (new SearchWindow(new ConcertTicket())).Show();
+                (new SearchWindow(new ConcertTicket(), ConcertTicket.DefaultPriorities)).Show();
             }
 
            
